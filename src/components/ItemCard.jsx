@@ -1,4 +1,5 @@
 import {Card} from "antd";
+import PropTypes from 'prop-types';
 
 function ItemCard(props) {
     const currency = props.item
@@ -33,5 +34,13 @@ function ItemCard(props) {
         </>
     )
 }
+
+ItemCard.propTypes = {
+  item: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      costs: PropTypes.array.isRequired,
+      prediction: PropTypes.array.isRequired,
+  }).isRequired,
+};
 
 export default ItemCard
