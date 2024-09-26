@@ -7,6 +7,7 @@ import { Menu , Spin, Flex, Button, Modal} from 'antd';
 
 
 const App = () => {
+    const addr = 'https://10.0.2.15:8000'
     const [currencies, setCurrencies] = useState([])
     const [itemName, setItemName] = useState('AK')
     const [itemData, setItemData] = useState(null)
@@ -24,7 +25,7 @@ const App = () => {
     };
 
     const getCurrentUser = () => {
-        axios.get('http://127.0.0.1:8000/users/me').then(r => {
+        axios.get(addr + '/users/me').then(r => {
             const status = r.status
             const user = r.data
             if (status != 401) {
@@ -37,12 +38,8 @@ const App = () => {
         })
     }
 
-    //const loginOrRegistry = () => {
-    //    axios.get('http://127.0.0.1:8000/auth/login').then(r => {
-    //}
-
     const fetchCurrencies = () => {
-        axios.get('http://127.0.0.1:8000/predict').then(r => {
+        axios.get(addr+'/predict').then(r => {
             const currencies = r.data
             const menuItems = [
               {
@@ -58,7 +55,7 @@ const App = () => {
     }
 
     const fetchItem = () => {
-        axios.get(`http://127.0.0.1:8000/predict/${itemName}`).then(r => {
+        axios.get(addr+`/predict/${itemName}`).then(r => {
             setItemData(r.data)
         })
     }
