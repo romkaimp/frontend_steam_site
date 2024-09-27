@@ -33,9 +33,9 @@ function LoginMenu() {
     };
 
     const Register = (values) => {
-        axios.post(addr+'/auth/jwt/register', {
-
-                "username": values.username,
+        axios.post(addr+'/auth/register', {
+		"username": values.username,
+                "email": values.username,
                 "password": values.password,
 
         }).then(r => {
