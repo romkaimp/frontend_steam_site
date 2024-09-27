@@ -7,13 +7,17 @@ import { Menu , Spin, Flex, Button, Modal} from 'antd';
 
 
 const App = () => {
+    //const addr = 'https://10.0.2.15:8000'
+    const addr = 'http://127.0.0.1:8000'
     const [currencies, setCurrencies] = useState([])
-    const [itemName, setItemName] = useState('AK')
+    const [itemName, setItemName] = useState('AK-47 | Elite Build (Minimal Wear)')
     const [itemData, setItemData] = useState(null)
 
     const [loginned, setLoginned] = useState(false)
     const [currentUser, setCurrentUser]= useState("")
     const [isModalOpen, setModalOpen] = useState(false);
+
+    const height = window.height
 
     const openModal = () => {
         setModalOpen(true);
@@ -24,7 +28,7 @@ const App = () => {
     };
 
     const getCurrentUser = () => {
-        axios.get('http://127.0.0.1:8000/users/me').then(r => {
+        axios.get(addr + '/users/me').then(r => {
             const status = r.status
             const user = r.data
             if (status != 401) {
@@ -37,12 +41,8 @@ const App = () => {
         })
     }
 
-    //const loginOrRegistry = () => {
-    //    axios.get('http://127.0.0.1:8000/auth/login').then(r => {
-    //}
-
     const fetchCurrencies = () => {
-        axios.get('http://127.0.0.1:8000/predict').then(r => {
+        axios.get(addr+'/predict').then(r => {
             const currencies = r.data
             const menuItems = [
               {
@@ -58,7 +58,7 @@ const App = () => {
     }
 
     const fetchItem = () => {
-        axios.get(`http://127.0.0.1:8000/predict/${itemName}`).then(r => {
+        axios.get(addr+`/predict/${itemName}`).then(r => {
             setItemData(r.data)
         })
     }
@@ -81,13 +81,14 @@ const App = () => {
             <Menu
                 onClick={onClick}
                 style={{
+                    height: height+300,
                     width: 256,
                 }}
                 defaultSelectedKeys={['1']}
                 defaultOpenKeys={['sub1']}
                 mode="inline"
                 items={currencies}
-                className="h-screen overflow-scroll"
+                className="h-screen overflow-y-scroll"
             />
             <div className="mx-auto my-auto">
                 {itemData ? <ItemCard item={itemData}/> : <Spin size="large"/>}

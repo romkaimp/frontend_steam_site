@@ -4,8 +4,10 @@ import {useState} from "react";
 //import {useEffect, useState} from 'react';
 
 function LoginMenu() {
+    //const addr = "https://10.0.2.15:8000"
+    const addr = "http://127.0.0.1:8000"
     const onFinish = (values) => {
-        axios.post('http://127.0.0.1:8000/auth/jwt/login', {
+        axios.post(addr+'/auth/jwt/login', {
             "username": values.username,
             "password": values.password,
         }, {
@@ -15,7 +17,7 @@ function LoginMenu() {
         }).then(r => {
             if (r.status == 204) {
                 console.log(r.headers["access-control-allow-credentials"])
-                axios.get('http://127.0.0.1:8000/users/me')
+                axios.get(addr+'/users/me')
             } else {
                 return Register(values)
             }
@@ -31,7 +33,7 @@ function LoginMenu() {
     };
 
     const Register = (values) => {
-        axios.post('http://127.0.0.1:8000/auth/jwt/register', {
+        axios.post(addr+'/auth/jwt/register', {
 
                 "username": values.username,
                 "password": values.password,
